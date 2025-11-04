@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Function to detect the distribution
-detect_distro() {
+detect_distribution() {
     if [ -f /etc/os-release ]; then
         . /etc/os-release
         DISTRO=$ID
@@ -13,7 +13,7 @@ detect_distro() {
 
 # Function to check and install required packages
 check_packages() {
-    detect_distro
+    detect_distribution
 
     local packages=()
     local aur_packages=()
@@ -131,7 +131,7 @@ system_info() {
     fi
     echo "Shell: $SHELL"
     echo "Uptime: $(uptime -p)"
-    detect_distro
+    detect_distribution
     case $DISTRO in
         "debian"|"ubuntu")
             echo "Total Installed Packages: $(dpkg-query -f '${binary:Package}\n' -W | wc -l)"
